@@ -1,0 +1,76 @@
+/* ===========================
+Index Of scss
+
+01. Transition Mixin
+02. Border Radius
+03.
+04.
+05. Element
+
+
+========================== */
+
+/* Transition */
+
+@mixin transition($x...) {
+    -webkit-transition: $x;
+    -moz-transition: $x;
+    -ms-transition: $x;
+    -o-transition: $x;
+    transition: $x;
+}
+
+/* Element */
+
+@mixin tabs() {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    align-items: stretch;
+    display: flex;
+    font-size: 1rem;
+    justify-content: space-between;
+    overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 1rem;
+    ul {
+        align-items: center;
+        border-bottom: 1px solid $grey-15;
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+        justify-content: flex-start;
+        li {
+            display: block;
+            @include transition(0.5s  ease-in-out);
+            border-bottom: 1px solid transparent;
+            margin:0 .5rem;
+            &:hover {
+                cursor: pointer;
+                border-bottom-color: $primary-alt;
+            }
+            &.is-active {
+                border-bottom-color: $primary;
+                a {
+                    color: $primary;
+                }
+            }
+        }
+    }
+    a {
+        align-items: center;
+
+        color: $grey-70;
+        display: flex;
+        justify-content: center;
+        margin-bottom: -1px;
+        padding: 0.5em 1em;
+        vertical-align: top;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}

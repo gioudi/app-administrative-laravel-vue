@@ -1,0 +1,16 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: $font-family-sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: $grey-58;
+    overflow-x: hidden;
+    font-size: 14px;
+}
+
+.tabs {
+    @include tabs();
+}
