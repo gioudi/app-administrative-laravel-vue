@@ -14,7 +14,13 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags= Tag::all();
+       if($tags){
+        return response()->json([
+            'tags' => $tags,
+            200
+        ]);
+       }
     }
 
     /**
@@ -35,13 +41,18 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
+        //Validate request
+        $this->validate($request, [
+            'tagName' => 'required|alpha'
+        ]);
+
          Tag::create([
             'tagName' => $request->tagName
         ]);
 
         return response()->json([
-            'message' => 'Working',
-            200
+            'message' => 'Nuevo tag creado',
+            201
         ]);
     }
 
@@ -74,9 +85,19 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+          //Validate request
+          $this->validate($request, [
+            'tagName' => 'required|alpha',
+            'id' => 'required'
+        ]);
+
+
+
+        return Tag::where('id', $request->id)->update([
+            'tagName' => $request->tagName
+        ]);
     }
 
     /**
