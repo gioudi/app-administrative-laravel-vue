@@ -14,13 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+/* AUTH */
 Route::post('login', 'Api\AuthController@login');
 Route::post('register', 'Api\AuthController@register');
+
+/* TAG */
 Route::post('create_tag', 'Api\TagController@store');
 Route::get('get_tag', 'Api\TagController@index');
 Route::put('edit_tag', 'Api\TagController@update');
+Route::delete('delete_tag', 'Api\TagController@destroy');
 
+/* CATEGORY */
+Route::get('img_upload', 'Api\CategoryController@upload');
+Route::post('img_upload', 'Api\CategoryController@upload');
+Route::post('create_category', 'Api\CategoryController@store');
+Route::get('get_category', 'Api\CategoryController@index');
+Route::put('edit_category', 'Api\CategoryController@update');
+Route::delete('delete_category', 'Api\CategoryController@destroy');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

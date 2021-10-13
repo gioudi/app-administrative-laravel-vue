@@ -10,6 +10,8 @@ import axios from 'axios'
 import GLightbox from 'glightbox';
 import VeeValidate from 'vee-validate';
 
+window.Vue = Vue;
+
 Vue.use(GLightbox);
 Vue.use(VeeValidate);
 

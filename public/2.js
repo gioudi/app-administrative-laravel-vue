@@ -89,6 +89,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -102,7 +164,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tags: [],
       editData: {
         tagName: ""
-      }
+      },
+      index: -1,
+      isDeleing: false,
+      showDeleteModal: false,
+      deleteItem: {},
+      deletingIndex: -1,
+      websiteSettings: []
     };
   },
   methods: {
@@ -115,25 +183,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(_this.data.tagName.trim() == '')) {
+                if (!(_this.data.tagName.trim() == "")) {
                   _context.next = 2;
                   break;
                 }
 
-                return _context.abrupt("return", _this.e('El nombre es requerido'));
+                return _context.abrupt("return", _this.e("El nombre es requerido"));
 
               case 2:
                 _context.next = 4;
-                return _this.callApi('post', 'api/create_tag', _this.data);
+                return _this.callApi("post", "api/create_tag", _this.data);
 
               case 4:
                 res = _context.sent;
 
                 if (res.status === 201) {
-                  _this.s('Tag añadido de forma exitosa');
+                  _this.s("Tag añadido de forma exitosa");
 
                   _this.addModal = false;
-                  _this.data.tagName = '';
+                  _this.data.tagName = "";
                 } else {
                   if (res.status == 422) {
                     if (res.data.errors.tagName) {
@@ -161,25 +229,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this2.editData.tagName.trim() == '')) {
+                if (!(_this2.editData.tagName.trim() == "")) {
                   _context2.next = 2;
                   break;
                 }
 
-                return _context2.abrupt("return", _this2.e('El nombre es requerido'));
+                return _context2.abrupt("return", _this2.e("El nombre es requerido"));
 
               case 2:
                 _context2.next = 4;
-                return _this2.callApi('put', 'api/edit_tag', _this2.editData);
+                return _this2.callApi("put", "api/edit_tag", _this2.editData);
 
               case 4:
                 res = _context2.sent;
 
                 if (res.status === 200) {
-                  _this2.s('Tag actualizado de forma exitosa');
+                  _this2.s("Tag actualizado de forma exitosa");
 
                   _this2.editModal = false;
-                  _this2.data.tagName = '';
+                  _this2.data.tagName = "";
                 } else {
                   if (res.status == 422) {
                     if (res.data.errors.tagName) {
@@ -201,35 +269,85 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     showModalEdit: function showModalEdit(tag) {
       this.editData = tag;
       this.editModal = true;
+    },
+    deleteTag: function deleteTag() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                // Vue.set(tag, "isDeleting", true);
+                _this3.isDeleing = true;
+                _context3.next = 3;
+                return _this3.callApi("delete", "api/delete_tag", _this3.deleteItem);
+
+              case 3:
+                res = _context3.sent;
+
+                if (res.status === 200) {
+                  _this3.tags.splice(_this3.deletingIndex, 1);
+
+                  _this3.s("El tag ha sido borrado de forma exitosa");
+                } else {
+                  _this3.swr();
+                }
+
+                _this3.isDeleing = false;
+                _this3.showDeleteModal = false;
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    showDeletingModal: function showDeletingModal(tag, i) {
+      /* const deleteModalObj = {
+        showDeleteModal :true,
+        deleteUrl: 'api/delete_tag',
+        data: tag,
+        deletingIndex: i,
+        isDeleted: false
+      }
+      this.$store.commit('setDeletingModalObj', deleteModalObj)
+      console.log('Metodo delete llamado') */
+      this.deleteItem = tag;
+      this.deletingIndex = i;
+      this.showDeleteModal = true;
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context3.next = 2;
-              return _this3.callApi('get', 'api/get_tag');
+              _context4.next = 2;
+              return _this4.callApi("get", "api/get_tag");
 
             case 2:
-              res = _context3.sent;
+              res = _context4.sent;
 
               if (res.status == 200) {
-                _this3.tags = res.data.tags;
+                _this4.tags = res.data.tags;
               } else {
-                _this3.swr();
+                _this4.swr();
               }
 
             case 4:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   }
 });
@@ -299,13 +417,13 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", { staticClass: "_table_name" }, [
                         _vm._v(
-                          "\n             " +
+                          "\n              " +
                             _vm._s(tag.tagName) +
                             "\n            "
                         )
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(tag.created_at))]),
+                      _c("td", [_vm._v(_vm._s(tag.created_at))]),
                       _vm._v(" "),
                       _c(
                         "td",
@@ -325,7 +443,18 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "Button",
-                            { attrs: { type: "error", size: "small" } },
+                            {
+                              attrs: {
+                                type: "error",
+                                size: "small",
+                                loading: tag.isDeleting
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showDeletingModal(tag, i)
+                                }
+                              }
+                            },
                             [_vm._v("Eliminar")]
                           )
                         ],
@@ -468,6 +597,66 @@ var render = function() {
             )
           ],
           1
+        ),
+        _vm._v(" "),
+        _c(
+          "Modal",
+          {
+            attrs: { width: "360" },
+            model: {
+              value: _vm.showDeleteModal,
+              callback: function($$v) {
+                _vm.showDeleteModal = $$v
+              },
+              expression: "showDeleteModal"
+            }
+          },
+          [
+            _c(
+              "p",
+              {
+                staticStyle: { color: "#f60", "text-align": "center" },
+                attrs: { slot: "header" },
+                slot: "header"
+              },
+              [
+                _c("Icon", { attrs: { type: "ios-information-circle" } }),
+                _vm._v(" "),
+                _c("span", [_vm._v("Eliminar Tag")])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticStyle: { "text-align": "center" } }, [
+              _c("p", [
+                _vm._v(
+                  "\n         ¿Estas seguro de querer eliminar este tag?\n        "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { attrs: { slot: "footer" }, slot: "footer" },
+              [
+                _c(
+                  "Button",
+                  {
+                    attrs: {
+                      type: "error",
+                      size: "large",
+                      long: "",
+                      loading: _vm.isDeleing,
+                      disabled: _vm.isDeleing
+                    },
+                    on: { click: _vm.deleteTag }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ],
+              1
+            )
+          ]
         ),
         _vm._v(" "),
         _c("Page", { attrs: { total: 100 } })

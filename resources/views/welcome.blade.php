@@ -8,6 +8,14 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         <link rel="stylesheet" href="{{asset('css/all.css')}}">
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+        <script>
+            (function  (){
+                window.Laravel = {
+                    csrfToken: '{{csrf_token()}}'
+                };
+            })();
+        </script>
     </head>
     <body>
     <div id="app">
