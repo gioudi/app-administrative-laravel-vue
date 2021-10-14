@@ -66,13 +66,14 @@
           placeholder="Ingrese algo"
           style="width: 100%"
         ></Input>
-        <div class="space"></div>
+       <br/>
         <Upload
           type="drag"
-          :headers="{ 'x-csrf-token': token }"
+          :headers="{ 'x-csrf-token': token}"
           :on-success="handleSuccess"
           :format="['jpg', 'jpeg', 'png']"
-          :max-size="2048"
+
+          :on--error="handleError"
           :on-format-error="handleFormatError"
           :on-exceeded-size="handleMaxSize"
           action="api/img_upload"
@@ -86,6 +87,9 @@
             <p>Click or drag files here to upload</p>
           </div>
         </Upload>
+        <div class="image_thumb" v-if="data.iconImage">
+            <img :src="`/uploads/${data.iconImage}`" >
+        </div>
 
         <div slot="footer">
           <Button type="default" @click="addModal = false">Cancelar</Button>
@@ -252,7 +256,16 @@ export default {
     },
 
     handleSuccess (res, file) {
-        this.data.iconImage = res;
+       // console.log('res',res, file);
+        this.data.iconImage =res.data;
+    },
+    handleError (res, file) {
+        console.log('file', file);
+        console.log('res', res);
+         this.$Notice.warning({
+            title: 'Formato de archivo es incorrecto',
+            desc: `${file.errors.file.length ? file.errors.file[0] : 'Algo esta mal'  }`
+        });
     },
     handleFormatError (file) {
         this.$Notice.warning({

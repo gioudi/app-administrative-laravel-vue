@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 class CategoryController extends Controller
 {
     /**
@@ -89,13 +90,27 @@ class CategoryController extends Controller
      */
     public function upload(Request $request)
     {
-
-       $validation=Validator::make($request -> all(), [
+        /* if($request->hasFile('image')){
+            if($request->file('image')->isValid()){
+                $request->validate([
+                    'image'=> 'mimes:jpeg,png,jpg|max:2048',
+                ]);
+                $imageName = time().'.'.$request->image->extension();
+                $request->image->move(public_path('uploads'), $imageName);
+                $url = $request->image->move(public_path('uploads'), $imageName);
+            }
+            return response()->json([
+                'success'=>true,
+                'message'=>'Imagen subida ',
+                'data'=> $url
+            ],200);
+        } */
+        $validation=Validator::make($request -> all(), [
 			'file'=> 'required|image|jpg,png,jpeg'
 		]);
 
       if($validation){
-        $picName = time().''.$request->file->extension();
+        $picName = time().'.'.$request->file->extension();
         $request->file->move(public_path('uploads'), $picName);
         return response()->json([
             'success'=>true,
@@ -103,5 +118,7 @@ class CategoryController extends Controller
             'data'=> $picName
         ]);
       }
+
+
     }
 }
