@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Tag;
+
 class TagController extends Controller
 {
     /**
@@ -14,13 +15,13 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags= Tag::all();
-       if($tags){
-        return response()->json([
-            'tags' => $tags,
-            200
-        ]);
-       }
+        $tags = Tag::all();
+        if ($tags) {
+            return response()->json([
+                'tags' => $tags,
+                200
+            ]);
+        }
     }
 
     /**
@@ -46,14 +47,14 @@ class TagController extends Controller
             'tagName' => 'required|alpha'
         ]);
 
-         Tag::create([
+        Tag::create([
             'tagName' => $request->tagName
         ]);
 
         return response()->json([
-            'message' => 'Nuevo tag creado',
-            201
-        ]);
+            'message' => 'Nuevo tag creado'
+
+        ], 201);
     }
 
     /**
@@ -87,8 +88,8 @@ class TagController extends Controller
      */
     public function update(Request $request)
     {
-          //Validate request
-          $this->validate($request, [
+        //Validate request
+        $this->validate($request, [
             'tagName' => 'required|alpha',
             'id' => 'required'
         ]);
@@ -108,9 +109,12 @@ class TagController extends Controller
      */
     public function destroy(Request $request)
     {
-           $this->validate($request, [
-               'id'=> 'required',
-           ]);
-           return Tag::where('id', $request->id)->delete();
+        $this->validate($request, [
+            'id' => 'required',
+        ]);
+        Tag::where('id', $request->id)->delete();
+        return response()->json([
+            'message' => 'Tag eliminado'
+        ], 200);
     }
 }

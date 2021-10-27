@@ -43,6 +43,12 @@ const routes = [
     component: () => import('../views/Posts.vue'),
     meta: { requiresAuth:true}
   },
+  {
+    path: '/users',
+    name: 'Users',
+    component: () => import('../views/AdminUsers.vue'),
+    meta: { requiresAuth:true}
+  },
 ]
 
 const router = new VueRouter({

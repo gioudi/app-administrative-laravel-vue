@@ -35,7 +35,7 @@ export default {
                 desc
             })
         },
-        e(desc='A ocurrido un error. Por favor intent mas tarde', title="Oops"){
+        e(desc='A ocurrido un error. Por favor intente mas tarde', title="Oops"){
             this.$Notice.error({
                 title,
                 desc

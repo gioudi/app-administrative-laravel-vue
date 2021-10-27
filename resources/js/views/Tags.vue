@@ -30,7 +30,7 @@
             <!-- TABLE TITLE -->
 
             <!-- ITEMS -->
-            <tr v-for="(tag, i) in tags" :key="tag">
+            <tr v-for="(tag, i) in tags" :key="i">
               <td>{{ i + 1 }}</td>
               <td class="_table_name">
                 {{ tag.tagName }}
@@ -103,29 +103,7 @@
       </Modal>
 
       <!-- tag delete modal -->
-      <Modal v-model="showDeleteModal" width="360">
-        <p slot="header" style="color: #f60; text-align: center">
-          <Icon type="ios-information-circle"></Icon>
-          <span>Eliminar Tag</span>
-        </p>
-        <div style="text-align: center">
-          <p>
-           ¿Estas seguro de querer eliminar este tag?
-          </p>
-
-        </div>
-        <div slot="footer">
-          <Button
-            type="error"
-            size="large"
-            long
-            :loading="isDeleing"
-            :disabled="isDeleing"
-            @click="deleteTag"
-            >Delete</Button
-          >
-        </div>
-      </Modal>
+        <deleteModal/>
 
       <Page :total="100" />
     </div>
@@ -133,6 +111,8 @@
 </template>
 
 <script>
+import deleteModal from '../components/deleteModal.vue';
+import {mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -156,6 +136,10 @@ export default {
 
     };
   },
+  components: {
+      deleteModal
+  }
+  ,
   methods: {
     async addTag() {
       if (this.data.tagName.trim() == "")
@@ -170,9 +154,9 @@ export default {
           if (res.data.errors.tagName) {
             this.e(res.data.errors.tagName[0]);
           }
-        } else {
+        }/*  else {
           this.swr();
-        }
+        } */
       }
     },
     async editTag() {
@@ -197,34 +181,17 @@ export default {
       this.editData = tag;
       this.editModal = true;
     },
-    async deleteTag() {
 
-
-     // Vue.set(tag, "isDeleting", true);
-        this.isDeleing = true;
-      const res = await this.callApi("delete", "api/delete_tag", this.deleteItem);
-      if (res.status === 200) {
-        this.tags.splice(this.deletingIndex, 1);
-        this.s("El tag ha sido borrado de forma exitosa");
-      } else {
-        this.swr();
-      }
-      this.isDeleing = false
-      this.showDeleteModal= false
-    },
     showDeletingModal (tag, i){
-       /* const deleteModalObj = {
-         showDeleteModal :true,
+       const deleteModalObj = {
+         showModalDelete:true,
          deleteUrl: 'api/delete_tag',
          data: tag,
          deletingIndex: i,
-         isDeleted: false
+         isDeleted: false,
+         msg:'¿Esta seguro de eliminar un tag?'
        }
-       this.$store.commit('setDeletingModalObj', deleteModalObj)
-       console.log('Metodo delete llamado') */
-        this.deleteItem = tag;
-        this.deletingIndex = i;
-        this.showDeleteModal = true;
+       this.$store.commit('setDeletingModalObj', deleteModalObj);
 
     }
   },
@@ -233,9 +200,19 @@ export default {
     if (res.status == 200) {
       this.tags = res.data.tags;
     } else {
-      this.swr();
+      this.e();
     }
   },
+  computed: {
+      ...mapGetters(["getDeleteModalObj"])
+  },
+  watch: {
+      getDeleteModalObj(obj){
+          if(obj.isDeleted){
+              this.tags.splice(obj.deletetingIndex,1)
+          }
+      }
+  }
 };
 </script>
 
