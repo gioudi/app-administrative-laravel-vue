@@ -44,7 +44,7 @@ class AdminUserController extends Controller
 
         $this->validate($request, [
             'fullName' => 'required',
-            'email' => 'bail|required|email',
+            'email' => 'bail|required|email|unique:users',
             'password' => 'bail|required|min:6',
             'userType' => 'required'
         ]);
@@ -90,9 +90,30 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        //Validate Request
+
+        $this->validate($request, [
+            'fullName' => 'required',
+            'email' => "bail|required|email|unique:users,email,$request->id",
+            'password' => 'min:6',
+            'userType' => 'required'
+        ]);
+
+        $user = [
+            'fullName' => $request->fullName,
+            'email' => $request->email,
+            'userType' => $request->userType
+        ];
+
+        if ($request->password) {
+            $Hashpassword = bcrypt($request->password);
+            $user['password'] = $Hashpassword;
+        }
+
+        $data = User::where('id', $request->id)->update($user);
+        return response()->json($data, 200);
     }
 
     /**

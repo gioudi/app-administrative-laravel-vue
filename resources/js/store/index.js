@@ -20,11 +20,15 @@ const store = new Vuex.Store({
             isDeleted: false,
             successMsg: '',
             msg:''
-        }
+        },
+        user: false
     },
     getters: {
         getDeleteModalObj(state) {
             return state.deleteModalObj
+        },
+        getUser(state) {
+            return state.user
         }
     },
     mutations: {
@@ -41,6 +45,9 @@ const store = new Vuex.Store({
         },
         setDeletingModalObj(state, data){
              state.deleteModalObj = data
+        },
+        updatedUser(state, data){
+             state.user = data
         }
     },
     modules:{

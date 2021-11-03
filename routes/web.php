@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/logout', function () {
     return view('welcome');
 });
+Route::get('/', 'Api\AuthController@index');
 
-Route::any('{slug}', function(){
-    return view('welcome');
-})
-;
+Route::any('{slug}', 'Api\AuthController@index');

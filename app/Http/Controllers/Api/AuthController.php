@@ -12,61 +12,81 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    public function  index(Request $request)
+    {
+        //firts check if you are loggedin and admin user ...
+        if (!Auth::check() && $request->path() != 'login') {
+            return redirect('/login');
+        }
+        if (!Auth::check() && $request->path() == 'login') {
+            return view('welcome');
+        }
+        //you are already logged in... so check for if you're an admin user
+        $user = Auth::user();
+        if ($user->userType == 'User') {
+            return redirect('/login');
+        }
+        if ($request->path() == 'login') {
+            return redirect('/dashboard');
+        }
+        return view('welcome');
+    }
     public function login(Request $request)
     {
-       $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
 
         $user = User::where('email', $request->email)->first();
 
-        if(!$user || !Hash::check($request->password, $user->password)) {
-          return response([
-            'message'=> ['Las credenciales ingresadas son erroneas!!']
-          ], 401);
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response([
+                'message' => ['Las credenciales ingresadas son erroneas!!']
+            ], 401);
         }
 
 
-       //$token = $user->createToken('my-app-token')->accessToken;
+        //$token = $user->createToken('my-app-token')->accessToken;
 
         $response = [
-          'user'=>$user
+            'user' => $user
 
         ];
-        return response()->json([$response,
+        return response()->json([
+            $response,
             'message' => 'Logueo Exitoso',
             200
         ]);
-
-
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
 
 
-        $validator= Validator::make( $request->all(),[
-            'username'=>'required|string|max:255',
-            'email'=>'required|email|unique:users',
-            'password'=>'required|min:6|confirmed',
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6|same:password',
         ]);
 
 
 
 
-        if($validator->fails()){
-            return response()->json(['error'=>$validator->errors(),'message' => 'Error al crear el usuario !'],401);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors(), 'message' => 'Error al crear el usuario !'], 401);
         }
 
-        $user= $request->all();
+        $user = $request->all();
         $user['password'] = Hash::make($user['password']);
         $success = User::create($user);
 
         //$accessToken = $user->createToken('MyApp')->accessToken;
-        return response()->json(['success'=>   $success, 'access_token'=>null,'message' => 'Usuario Creado!'],
-        201);
-
+        return response()->json(
+            ['success' =>   $success, 'access_token' => null, 'message' => 'Usuario Creado!'],
+            201
+        );
     }
 
 
@@ -77,10 +97,5 @@ class AuthController extends Controller
             'message' => 'Working',
             200
         ]);
-
-
     }
-
-
-
 }

@@ -1,12 +1,7 @@
 <template>
-  <div id="app" @wheel="landingScroll"  v-if="!this.$route.meta.requiresAuth">
-    <Sing v-if="showModal" @close="closeModal()"  />
-    <NavBar @open="openModal()"  />
-    <router-view />
-    <Footer v-if="!this.$route.meta.guest"/>
-  </div>
-  <div v-else>
-      <div>
+
+  <div id="app" @wheel="landingScroll" >
+      <div v-if="$store.state.user">
       <!--========== ADMIN SIDE MENU one ========-->
       <div class="_1side_menu" >
         <div class="_1side_menu_logo">
@@ -28,6 +23,7 @@
               <li><router-link to="tags"><a><Icon type="ios-speedometer" /> Tags</a></router-link></li>
               <li><router-link to="categories"><a><Icon type="ios-speedometer" /> Categorias</a></router-link></li>
               <li><router-link to="users"><a><Icon type="ios-speedometer" /> Usuarios</a></router-link></li>
+              <li><a  @click="logout"><a ><Icon type="ios-speedometer" /> Cerrar Sesión</a></a></li>
             </ul>
           </div>
         </div>
@@ -48,7 +44,7 @@
         </div>
       </div>
       <!--========= HEADER ==========-->
-    </div>
+        </div>
     	<router-view/>
   </div>
 </template>
@@ -56,18 +52,20 @@
 // @is an alias to /src
 import NavBar from "./components/NavBar.vue";
 import Footer from "./components/Footer.vue";
-import Sing from "./views/Sing.vue";
+
 import WOW from "wowjs";
 import CountUp from "countup";
 export default {
   components: {
     NavBar,
     Footer,
-    Sing,
+
   },
+  props: ['user'],
   data: function () {
     return {
       showModal: false,
+      isLoggedIn: false
     };
   },
   methods: {
@@ -199,6 +197,10 @@ export default {
     closeModal() {
       this.showModal = false;
     },
+    async logout() {
+    await this.$store.dispatch("LogOut");
+    this.$router.push("/");
+    },
   },
   created() {
     setTimeout(() => {
@@ -212,6 +214,8 @@ export default {
     new WOW.WOW({
       live: true,
     }).init();
+    this.$store.commit('updatedUser', this.user)
+    console.log(this.user)
   },
   mounted() {},
 };

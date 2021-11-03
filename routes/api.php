@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminCheck;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'Api\AuthController@login');
 Route::post('register', 'Api\AuthController@register');
+Route::post('logout', 'Api\AuthController@logout');
 
 /* TAG */
 Route::post('create_tag', 'Api\TagController@store');

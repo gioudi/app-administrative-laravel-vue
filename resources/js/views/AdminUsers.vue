@@ -111,31 +111,31 @@
       <!-- user editing modal -->
       <Modal
         v-model="editModal"
-        title="Editar  Categoria"
+        title="Editar  Administrador"
         :mask-closable="false"
         :closable="false"
       >
           <Input
-          v-model="data.fullName"
+          v-model="editData.fullName"
           placeholder="Nombre Completo"
           style="width: 100%"
         ></Input>
         <div style="padding: 10px 0"></div>
         <Input
           type="email"
-          v-model="data.email"
+          v-model="editData.email"
           placeholder="Email"
           style="width: 100%"
         ></Input>
         <div style="padding: 10px 0"></div>
         <Input
           type="password"
-          v-model="data.password"
+          v-model="editData.password"
           placeholder="Password"
           style="width: 100%"
         ></Input>
         <div style="padding: 10px 0"></div>
-          <Select placeholder="Seleccione un rol" v-model="data.userType" style="width: 100%">
+          <Select placeholder="Seleccione un rol" v-model="editData.userType" style="width: 100%">
               <Option value="Admin">Administrador</Option>
               <Option value="Editor">Editor</Option>
           </Select>
@@ -226,23 +226,21 @@ export default {
       }
     },
     async editUser() {
-       if (this.data.fullName.trim() == "")
+       if (this.editData.fullName.trim() == "")
         return this.e("El nombre es requerido");
-      if (this.data.email.trim() == "")
+      if (this.editData.email.trim() == "")
         return this.e("El email es requerido");
-      if (this.data.password.trim() == "")
-        return this.e("La contraseña es requerida");
-       if(!this.data.userType)
+       if(!this.editData.userType)
         return this.e("El rol es requerido");
 
       const res = await this.callApi("put", "api/edit_user", this.editData);
       if (res.status === 200) {
         this.s("Administrador actualizado de forma exitosa");
         this.editModal = false;
-         this.data.fullName = "";
-        this.data.email = "";
-        this.data.password = "";
-        this.data.userType = "";
+         this.editData.fullName = "";
+        this.editData.email = "";
+        this.editData.password = "";
+        this.editData.userType = "";
       } else {
         if (res.status == 422) {
            for (let index = 0; index < res.data.errors.length; index++) {
@@ -254,8 +252,13 @@ export default {
       }
     },
     showModalEdit(user, index) {
-
-      this.editData = user;
+       let obj = {
+           id: user.id,
+           fullName: user.fullName,
+           email: user.email,
+           userType: user.userType
+       }
+      this.editData = obj;
       this.editModal = true;
       this.index = index;
       this.isEditingItem = true;
