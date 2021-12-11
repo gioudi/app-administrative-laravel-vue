@@ -1,4 +1,4 @@
-require('./bootstrap');
+
 
 
 
@@ -8,12 +8,12 @@ import router from './router'
 import store from './store/index'
 import axios from 'axios'
 import GLightbox from 'glightbox';
-import VeeValidate from 'vee-validate';
+//import VeeValidate from 'vee-validate';
 
 window.Vue = Vue;
 
 Vue.use(GLightbox);
-Vue.use(VeeValidate);
+//Vue.use(VeeValidate);
 
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';

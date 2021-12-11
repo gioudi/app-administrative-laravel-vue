@@ -16,11 +16,10 @@ const actions = {
         let UserForm = new FormData();
         UserForm.append('email', form.email);
         UserForm.append('password', form.password);
-        console.log("form", UserForm)
+
         await dispatch('LogIn',UserForm);
     },
      async LogIn({commit}, User) {
-         console.log(User)
          await axios.post('api/login',User);
          await commit('setUser', User.get('email'));
 
@@ -35,7 +34,7 @@ const actions = {
      },
      async LogOut({commit}){
          let user = null;
-         commit('logout', user);
+         commit('LogOut', user);
      }
 };
 const mutations = {

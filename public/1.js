@@ -489,8 +489,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.data.iconImage = res.data;
     },
     handleError: function handleError(res, file) {
-      console.log("file", file);
-      console.log("res", res);
       this.$Notice.warning({
         title: "Formato de archivo es incorrecto",
         desc: "".concat(file.errors.file.length ? file.errors.file[0] : "Algo esta mal")

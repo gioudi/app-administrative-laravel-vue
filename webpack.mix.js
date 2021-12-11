@@ -15,8 +15,8 @@ mix.js('resources/js/main.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 mix.browserSync('http://127.0.0.1:8000/');
 
-mix.styles([
+/* mix.styles([
     'public/css/grid.min.css',
     'public/css/main.css',
 
-], 'public/css/all.css');
+], 'public/css/all.css'); */

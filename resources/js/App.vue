@@ -1,64 +1,83 @@
 <template>
+<div class="layout" id="app" v-if="$store.state.user">
+    <Layout >
+            <Header>
+                <Menu mode="horizontal" theme="dark" active-name="1">
+                    <div class="layout-logo"></div>
+                    <div class="layout-nav">
+                    <MenuItem name="4">
+                            <Icon type="ios-paper"></Icon>
+                            <a  @click="logout"><Icon type="ios-speedometer" /> Cerrar Sesión</a>
+                    </MenuItem>
+                    </div>
+                </Menu>
+            </Header>
+            <Layout>
+                <Sider hide-trigger :style="{background: '#fff'}">
+                    <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
+                        <MenuItem name="1">
+                            <Icon type="ios-navigate"></Icon>
+                                <router-link to="dashboard"><a> Inicio</a></router-link>
+                        </MenuItem>
+                        <Submenu name="2">
+                            <template slot="title">
+                                <Icon type="ios-keypad"></Icon>
+                               <router-link to="tags"><a>Tags</a></router-link>
+                            </template>
+                            <MenuItem name="2-1">Option 1</MenuItem>
+                            <MenuItem name="2-2">Option 2</MenuItem>
+                        </Submenu>
+                        <Submenu name="3">
+                            <template slot="title">
+                                <Icon type="ios-analytics"></Icon>
+                                 <router-link to="categories"><a> Categories</a></router-link>
+                            </template>
+                            <MenuItem name="3-1">Option 1</MenuItem>
+                            <MenuItem name="3-2">Option 2</MenuItem>
+                        </Submenu>
+                        <Submenu name="4">
+                            <template slot="title">
+                                <Icon type="ios-analytics"></Icon>
+                                  <router-link to="users"><a> Users</a></router-link>
+                            </template>
+                            <MenuItem name="4-1">Option 1</MenuItem>
+                            <MenuItem name="4-2">Option 2</MenuItem>
+                        </Submenu>
+                    </Menu>
+                </Sider>
+                <Layout :style="{padding: '0 24px 24px'}">
+                    <Breadcrumb :style="{margin: '24px 0'}">
+                        <BreadcrumbItem>Home</BreadcrumbItem>
+                        <BreadcrumbItem>Vista</BreadcrumbItem>
+                        <BreadcrumbItem>Layout</BreadcrumbItem>
+                    </Breadcrumb>
+                    <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+                        <router-view/>
+                    </Content>
+                </Layout>
+            </Layout>
+        </Layout>
 
-  <div id="app" @wheel="landingScroll" >
-      <div v-if="$store.state.user">
-      <!--========== ADMIN SIDE MENU one ========-->
-      <div class="_1side_menu" >
-        <div class="_1side_menu_logo">
-          <h3 style="text-align:center;">Logo Image</h3>
-          <!--<img src="/img/logo.jpg" style="width: 108px;margin-left: 68px;"/>-->
-        </div>
 
-        <!--~~~~~~~~ MENU CONTENT ~~~~~~~~-->
-        <div class="_1side_menu_content">
-          <div class="_1side_menu_img_name">
-            <!-- <img class="_1side_menu_img" src="/pic.png" alt="" title=""> -->
-            <p class="_1side_menu_name">Admin</p>
-          </div>
+</div>
+<div v-else>
+      <navbar />
+     <router-view/>
+</div>
 
-          <!--~~~ MENU LIST ~~~~~~-->
-          <div class="_1side_menu_list">
-            <ul class="_1side_menu_list_ul">
-              <li><router-link to="dashboard"><a><Icon type="ios-speedometer" /> Inicio</a></router-link></li>
-              <li><router-link to="tags"><a><Icon type="ios-speedometer" /> Tags</a></router-link></li>
-              <li><router-link to="categories"><a><Icon type="ios-speedometer" /> Categorias</a></router-link></li>
-              <li><router-link to="users"><a><Icon type="ios-speedometer" /> Usuarios</a></router-link></li>
-              <li><a  @click="logout"><a ><Icon type="ios-speedometer" /> Cerrar Sesión</a></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!--========== ADMIN SIDE MENU ========-->
 
-      <!--========= HEADER ==========-->
-      <div class="header">
-        <div class="_2menu _box_shadow">
-          <div class="_2menu_logo">
-            <ul class="open_button">
-              <li>
-                <Icon type="ios-list" />
-              </li>
-              <!--<li><Icon type="ios-albums" /></li>-->
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!--========= HEADER ==========-->
-        </div>
-    	<router-view/>
-  </div>
 </template>
 <script>
 // @is an alias to /src
 import NavBar from "./components/NavBar.vue";
-import Footer from "./components/Footer.vue";
+import OtherFooter from "./components/Footer.vue";
 
 import WOW from "wowjs";
-import CountUp from "countup";
+
 export default {
   components: {
-    NavBar,
-    Footer,
+    navbar: NavBar,
+    OtherFooter,
 
   },
   props: ['user'],
@@ -69,53 +88,8 @@ export default {
     };
   },
   methods: {
-    fadeout() {
-      document.querySelector(".preloader").style.opacity = "0";
-      document.querySelector(".preloader").style.display = "none";
-    },
-    initCount() {
-      const countUp = new CountUp({
-        start: 0,
-        duration: 2000,
-        intvalues: true,
-        interval: 100,
-        append: " ",
-      });
-      if (!countUp.error) {
-        countUp.start();
-      } else {
-        console.error(countUp.error);
-      }
-    },
-    filterButton() {
-      let filterButtons = document.querySelectorAll(
-        ".portfolio-btn-wrapper button"
-      );
-      filterButtons.forEach((e) =>
-        e.addEventListener("click", () => {
-          let filterValue = event.target.getAttribute("data-filter");
-          iso.arrange({
-            filter: filterValue,
-          });
-        })
-      );
-
-      var elements = document.getElementsByClassName("portfolio-btn");
-      for (var i = 0; i < elements.length; i++) {
-        elements[i].onclick = function () {
-          var el = elements[0];
-          while (el) {
-            if (el.tagName === "BUTTON") {
-              el.classList.remove("active");
-            }
-            el = el.nextSibling;
-          }
-          this.classList.add("active");
-        };
-      }
-    },
     landingScroll(evt) {
-      console.log("scroll");
+
       this.isFirefox = navigator.userAgent.indexOf("Firefox") > -1;
       this.isIe =
         navigator.userAgent.indexOf("MSIE") > -1 ||
@@ -190,35 +164,44 @@ export default {
         });
       });
     },
-    openModal() {
-      this.showModal = true;
-      console.log(this.showModal);
-    },
-    closeModal() {
-      this.showModal = false;
-    },
+
     async logout() {
-    await this.$store.dispatch("LogOut");
-    this.$router.push("/");
+        await this.$store.dispatch("LogOut");
+         this.$store.commit('updatedUser', false)
+        this.$router.push("/");
     },
   },
   created() {
-    setTimeout(() => {
-      this.filterButton();
-      this.initCount();
-    }, 1000);
-    setTimeout(() => {
-      console.log("Hola");
-      this.fadeout();
-    }, 2000);
     new WOW.WOW({
       live: true,
     }).init();
-    this.$store.commit('updatedUser', this.user)
-    console.log(this.user)
+    this.$store.commit('updatedUser', this.user);
+
   },
   mounted() {},
 };
 </script>
-<style>
+<style scoped>
+    .layout{
+    border: 1px solid #d7dde4;
+    background: #f5f7f9;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.layout-logo{
+    width: 100px;
+    height: 30px;
+    background: #5b6270;
+    border-radius: 3px;
+    float: left;
+    position: relative;
+    top: 15px;
+    left: 20px;
+}
+.layout-nav{
+    width: 420px;
+    margin: 0 auto;
+    margin-right: 20px;
+}
 </style>

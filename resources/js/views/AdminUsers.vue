@@ -287,8 +287,7 @@ export default {
       this.data.iconImage = res.data;
     },
     handleError(res, file) {
-      console.log("file", file);
-      console.log("res", res);
+
       this.$Notice.warning({
         title: "Formato de archivo es incorrecto",
         desc: `${

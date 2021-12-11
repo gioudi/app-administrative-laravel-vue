@@ -14,21 +14,6 @@ class AuthController extends Controller
 {
     public function  index(Request $request)
     {
-        //firts check if you are loggedin and admin user ...
-        if (!Auth::check() && $request->path() != 'login') {
-            return redirect('/login');
-        }
-        if (!Auth::check() && $request->path() == 'login') {
-            return view('welcome');
-        }
-        //you are already logged in... so check for if you're an admin user
-        $user = Auth::user();
-        if ($user->userType == 'User') {
-            return redirect('/login');
-        }
-        if ($request->path() == 'login') {
-            return redirect('/dashboard');
-        }
         return view('welcome');
     }
     public function login(Request $request)
@@ -65,13 +50,10 @@ class AuthController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
+            'fullName' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|min:6|same:password',
+            'password' => 'required|min:6',
         ]);
-
-
 
 
         if ($validator->fails()) {

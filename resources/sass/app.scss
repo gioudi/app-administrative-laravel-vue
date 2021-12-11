@@ -9,41 +9,29 @@ Index Of scss
 
 
 ========================== */
+
+
 /*======================================
     Variables
 ========================================*/
 
 @import 'variables';
+
 /*======================================
     Normalize CSS
 ========================================*/
 
 // Fonts
 @import url("https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 //Line Icons
 @import '~@morteza-jamali/lineicons/WebFont/font-css/LineIcons.css';
-
 // Animate
 @import '~animate.css/animate.css';
-
 // Glightbox
-
 @import '~glightbox/dist/css/glightbox.css';
-
 // Slide
-@import  '~tiny-slider/dist/tiny-slider.css';
-
+@import '~tiny-slider/dist/tiny-slider.css';
 //Mixin
 @import './global/mixin';
 // Global
-
 @import './global/global';
-
-
-// Pages
-
-@import './pages/Login';
-@import './pages/Register';
-
-

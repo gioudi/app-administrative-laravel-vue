@@ -7187,20 +7187,3 @@ body {
   text-decoration: none;
 }
 
-.login {
-  transition: all 0.4s ease-in-out;
-}
-
-/* View Register */
-
-.register {
-  position: relative;
-}
-
-.register .hero-area {
-  padding: 4rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-

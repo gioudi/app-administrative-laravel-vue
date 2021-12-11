@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/logout', function () {
-    return view('welcome');
-});
+
 Route::get('/', 'Api\AuthController@index');
 
 Route::any('{slug}', 'Api\AuthController@index');
