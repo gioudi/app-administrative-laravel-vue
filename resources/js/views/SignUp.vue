@@ -83,7 +83,6 @@ export default {
         try {
             await this.Register(this.formInline);
             this.s("SingUp successfully !!");
-            this.$store.commit('updatedUser', true);
             this.isLogging = true;
             this.$router.push("/dashboard");
         } catch (error) {

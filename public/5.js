@@ -124,27 +124,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 6:
                 _this2.s("SingIn successfully !!");
 
-                _this2.$store.commit('updatedUser', true);
-
                 _this2.isLogging = true;
 
                 _this2.$router.push("/dashboard");
 
-                _context.next = 15;
+                _context.next = 14;
                 break;
 
-              case 12:
-                _context.prev = 12;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](3);
 
                 _this2.e(_context.t0);
 
-              case 15:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 12]]);
+        }, _callee, null, [[3, 11]]);
       }))();
     }
   })

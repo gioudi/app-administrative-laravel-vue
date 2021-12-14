@@ -73,7 +73,6 @@ import { mapActions, mapMutations } from "vuex";
                     try {
                         await this.LogIn(User);
                         this.s("SingIn successfully !!");
-                         this.$store.commit('updatedUser', true);
                         this.isLogging = true;
                         this.$router.push("/dashboard");
 

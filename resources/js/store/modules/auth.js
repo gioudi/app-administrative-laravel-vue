@@ -22,7 +22,6 @@ const actions = {
      async LogIn({commit}, User) {
          await axios.post('api/login',User);
          await commit('setUser', User.get('email'));
-
      },
      async CreatePost({dispatch}, post){
          await axios.post('api/post', post);
@@ -35,6 +34,7 @@ const actions = {
      async LogOut({commit}){
          let user = null;
          commit('LogOut', user);
+
      }
 };
 const mutations = {

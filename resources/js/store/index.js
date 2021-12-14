@@ -1,6 +1,6 @@
 import Vuex from "vuex";
 import Vue from "vue";
-import createPersistedState from "vuex-persistedstate";
+import createPersistedState from 'vuex-persistedstate';
 import auth from './modules/auth';
 
 //Load vuex
@@ -21,7 +21,7 @@ const store = new Vuex.Store({
             successMsg: '',
             msg:''
         },
-        user: false
+
     },
     getters: {
         getDeleteModalObj(state) {
@@ -46,14 +46,12 @@ const store = new Vuex.Store({
         setDeletingModalObj(state, data){
              state.deleteModalObj = data
         },
-        updatedUser(state, data){
-             state.user = data
-        }
+
     },
     modules:{
         auth
     },
-    plugins: [createPersistedState]
+    plugins: [createPersistedState()]
 });
 
 export default store;

@@ -20,12 +20,7 @@
 
 <body>
     <div id="app">
-        @if (Auth::check())
-            <app :user="{{ Auth::user() }}" />
-        @else
-            <app :user="false" />
-        @endif
-
+        <app />
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"
         integrity="sha512-Rd5Gf5A6chsunOJte+gKWyECMqkG8MgBYD1u80LOOJBfl6ka9CtatRrD4P0P5Q5V/z/ecvOCSYC8tLoWNrCpPg=="
